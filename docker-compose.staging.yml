@@ -56,10 +56,10 @@ services:
         target: /etc/nginx/ssl/privkey-root.pem
         mode: 0444
       - source: ssl_cert_other
-        target: /etc/nginx/ssl/fullchain-root.pem
+        target: /etc/nginx/ssl/fullchain-other.pem
         mode: 0444
       - source: ssl_key_other
-        target: /etc/nginx/ssl/privkey-root.pem
+        target: /etc/nginx/ssl/privkey-other.pem
         mode: 0444
     depends_on:
       - api
