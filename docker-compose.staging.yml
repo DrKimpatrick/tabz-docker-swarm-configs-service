@@ -55,6 +55,12 @@ services:
       - source: ssl_key_root
         target: /etc/nginx/ssl/privkey-root.pem
         mode: 0444
+      - source: ssl_cert_other
+        target: /etc/nginx/ssl/fullchain-root.pem
+        mode: 0444
+      - source: ssl_key_other
+        target: /etc/nginx/ssl/privkey-root.pem
+        mode: 0444
     depends_on:
       - api
     ports:
@@ -125,4 +131,8 @@ secrets:
   ssl_cert_root:
     external: true
   ssl_key_root:
+    external: true
+  ssl_cert_other:
+    external: true
+  ssl_key_other:
     external: true
