@@ -63,10 +63,10 @@ services:
         mode: 0444
         # tabz-api.omukozi.com | has come in as a backup after the main domain failed to renew
       - source: ssl_cert_tabz_api_omukozi
-        target: /etc/nginx/ssl/fullchain-other.pem
+        target: /etc/nginx/ssl/fullchain.pem
         mode: 0444
       - source: ssl_key_tabz_api_omukozi
-        target: /etc/nginx/ssl/privkey-other.pem
+        target: /etc/nginx/ssl/privkey.pem
         mode: 0444
     depends_on:
       - api
