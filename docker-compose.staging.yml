@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 configs:
   nginx-config:
@@ -8,14 +8,12 @@ services:
   notification:
     image: index.docker.io/drkimpatrick/ms-notification-tabz:develop
     ports:
-      - '8000:8000'
+      - "8000:8000"
 
     networks:
       - tabz-media
     env_file:
       - .env-notification
-    # depends_on:
-    #   - kafka
     deploy:
       replicas: 1
 
@@ -24,13 +22,9 @@ services:
     env_file:
       - .env
     ports:
-      - '4000:4000'
+      - "4000:4000"
     networks:
       - tabz-media
-    # environment:
-    #   KAFKA_BROKERS: kafka:9092
-    # depends_on:
-    #   - kafka
     deploy:
       replicas: 1
 
@@ -61,14 +55,6 @@ services:
       - source: ssl_key_other
         target: /etc/nginx/ssl/privkey-other.pem
         mode: 0444
-        # tabz-api.omukozi.com | has come in as a backup after the main domain failed to renew
-      # - source: ssl_cert_tabz_api_omukozi
-      #   target: /etc/nginx/ssl/fullchain-tabz_api_omukozi.pem
-      #   mode: 0444
-      # - source: ssl_key_tabz_api_omukozi
-      #   target: /etc/nginx/ssl/privkey-tabz_api_omukozi.pem
-      #   mode: 0444
-        # ussd.tabzmedia.org
       - source: ssl_cert_ussd
         target: /etc/nginx/ssl/fullchain-ussd.pem
         mode: 0444
@@ -87,53 +73,6 @@ services:
         constraints:
           - node.role == manager
 
-  # zookeeper:
-  #   image: confluentinc/cp-zookeeper:latest
-  #   ports:
-  #     - '2181:2181'
-  #   environment:
-  #     ZOOKEEPER_CLIENT_PORT: 2181
-  #   networks:
-  #     - tabz-media
-  #   deploy:
-  #     replicas: 1
-
-  # kafka:
-  #   image: confluentinc/cp-kafka:latest
-  #   ports:
-  #     - '9092:9092'
-  #   depends_on:
-  #     - zookeeper
-  #   environment:
-  #     KAFKA_LISTENERS: PLAINTEXT://:9092
-  #     KAFKA_BROKER_ID: 1
-  #     KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-  #     KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://13.245.55.98:9092 # Update to your external IP or domain
-  #     KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
-  #     KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-  #     KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-  #   networks:
-  #     - tabz-media
-  #   deploy:
-  #     replicas: 1
-
-  # control-center:
-  #   image: confluentinc/cp-enterprise-control-center
-  #   ports:
-  #     - '8080:9021'
-  #   environment:
-  #     CONTROL_CENTER_BOOTSTRAP_SERVERS: kafka:9092
-  #     CONTROL_CENTER_ZOOKEEPER_CONNECT: zookeeper:2181
-  #     CONTROL_CENTER_REPLICATION_FACTOR: 1
-  #     PORT: 9021
-  #   depends_on:
-  #     - kafka
-  #     - zookeeper
-  #   networks:
-  #     - tabz-media
-  #   deploy:
-  #     replicas: 1
-
 networks:
   tabz-media:
 
@@ -150,10 +89,6 @@ secrets:
     external: true
   ssl_key_other:
     external: true
-  # ssl_cert_tabz_api_omukozi:
-  #   external: true
-  # ssl_key_tabz_api_omukozi:
-  #   external: true
   ssl_cert_ussd:
     external: true
   ssl_key_ussd:
