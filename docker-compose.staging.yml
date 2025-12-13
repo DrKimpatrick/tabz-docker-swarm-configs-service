@@ -6,7 +6,8 @@ configs:
 
 services:
   notification:
-    image: index.docker.io/drkimpatrick/ms-notification-tabz:develop
+    # image: index.docker.io/drkimpatrick/ms-notification-tabz:develop
+    image: index.docker.io/drkimpatrick/ms-notification-tabz:fx
     ports:
       - "8000:8000"
 
