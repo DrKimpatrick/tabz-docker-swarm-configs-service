@@ -8,6 +8,8 @@ services:
   notification:
     image: index.docker.io/drkimpatrick/ms-notification-tabz:develop
     # image: index.docker.io/drkimpatrick/ms-notification-tabz:fx
+    environment:
+      - NODE_OPTIONS=--max-old-space-size=4096
     ports:
       - "8000:8000"
 
@@ -17,9 +19,14 @@ services:
       - .env-notification
     deploy:
       replicas: 1
+      resources:
+        limits:
+          memory: 5G
 
   api:
     image: index.docker.io/drkimpatrick/new-tabz-media:prod
+    environment:
+      - NODE_OPTIONS=--max-old-space-size=4096
     env_file:
       - .env
     ports:
@@ -28,6 +35,9 @@ services:
       - tabz-media
     deploy:
       replicas: 1
+      resources:
+        limits:
+          memory: 5G
 
   nginx:
     image: nginx:stable-alpine
