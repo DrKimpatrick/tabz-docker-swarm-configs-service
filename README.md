@@ -21,8 +21,9 @@ e.g login to github docker registry
 
 when using docker stack deploy in a swarm the `--with-registry-auth` option will forward the login information to other node
 
-```
+## SwarmByte jackpot webhooks (`ms-notification-tabz`)
 
+- **`API_BASE_URL_PRIMARY=https://ussd.tabzmedia.org`** in `.env-notification` so `POST /v1/collect` sends a `webhookUrl` that reaches the notification service.
+- Nginx: **`ussd.tabzmedia.org`** proxies `/` to the notification container; **`api.tabzmedia.org`** `/` goes to the main Tabz API — SwarmByte must **not** use `api.tabzmedia.org` for `/v1/collections/swarmbyte/callback` or you get **404**.
+- Set **`SWARMBYTE_CALLBACK_SECRET`** (or Swarm secret) to match the merchant **`callbackSecret`** in SwarmByte Payments when verifying `X-Swarmbyte-Signature`.
 
-
-```
