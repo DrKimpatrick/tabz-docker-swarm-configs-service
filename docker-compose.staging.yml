@@ -5,6 +5,19 @@ configs:
     file: ./nginx-conf/default.conf
 
 services:
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy noeviction
+    networks:
+      - tabz-media
+    volumes:
+      - redis-data:/data
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          memory: 512M
+
   notification:
     image: index.docker.io/drkimpatrick/ms-notification-tabz:develop
     # image: index.docker.io/drkimpatrick/ms-notification-tabz:fx
@@ -17,6 +30,8 @@ services:
       - tabz-media
     env_file:
       - .env-notification
+    depends_on:
+      - redis
     deploy:
       replicas: 1
       resources:
@@ -86,6 +101,9 @@ services:
 
 networks:
   tabz-media:
+
+volumes:
+  redis-data:
 
 secrets:
   ssl_cert:

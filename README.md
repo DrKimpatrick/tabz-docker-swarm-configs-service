@@ -35,6 +35,9 @@ The **`notification`** service in `docker-compose.staging.yml` loads **`.env-not
 | `SWARMBYTE_BACKUP_CLIENT_ID` / `SECRET` / `WALLET_ADDRESS` | **Backup** merchant (separate account; all three required for routing) |
 | `SWARMBYTE_WALLET_ROUTING_ENABLED` | `true` — per-USSD-code primary % caps; `false` — always primary |
 | `API_BASE_URL_PRIMARY` / `SWARMBYTE_WEBHOOK_PUBLIC_BASE_URL` | Public HTTPS origin for `POST /v1/collections/swarmbyte/callback` |
+| `REDIS_URL` | `redis://redis:6379` — durable BullMQ queues for USSD collect jobs during traffic spikes |
+| `MONGO_MAX_POOL_SIZE` | `100` recommended in production (was 30) |
+| `MONGO_MIN_POOL_SIZE` | `10` recommended in production |
 
 Primary and backup each use their **own OAuth credentials**. Status polling uses the same merchant as the original collect.
 
