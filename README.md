@@ -51,3 +51,19 @@ Primary and backup each use their **own OAuth credentials**. Status polling uses
 docker stack deploy --with-registry-auth -c docker-compose.staging.yml tabz-media-services
 ```
 
+### Swarmbyte payouts (jackpot winners and awards)
+
+Money goes out from the **primary** jackpot merchant (`SWARMBYTE_CLIENT_ID` / `SECRET` / `WALLET_ADDRESS`) through `POST /v1/disburse`.
+
+| Variable | Purpose |
+|----------|---------|
+| `SWARMBYTE_DISBURSEMENT_PIN` | Disbursement PIN set in the Swarmbyte merchant dashboard. **Empty = every payout is refused.** |
+| `PAYOUT_ALERT_NUMBERS` | Comma-separated numbers that get an SMS for every payout result |
+| `PAYOUT_AWARD_MAX_PER_PAYOUT` / `PAYOUT_AWARD_MAX_PER_DAY` | Limits for ad-hoc awards (default 500,000 / 3,000,000 UGX) |
+| `MONGO_AUTO_INDEX` | Must be exactly `true` (no comment on the same line) so the "one payout per winner" unique index exists |
+
+**Swarmbyte dashboard, primary merchant:** enable *API disbursements*, set the disbursement PIN, and add the server's public IP to the IP allowlist (an empty allowlist returns 403).
+
+**Webhook:** payouts report back to `https://ussd.tabzmedia.org/v1/disbursements/swarmbyte/callback` (same `ussd.tabzmedia.org` host as collections; no nginx change needed). Each callback is re-checked with Swarmbyte's status API, and a 10-second status poll covers missed callbacks.
+
+**Safety:** a payout is sent once and never retried. A failed payout stays failed; an unclear result is marked `UNKNOWN` and must be checked in the Swarmbyte dashboard.
