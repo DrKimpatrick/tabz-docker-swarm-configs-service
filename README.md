@@ -1,5 +1,10 @@
 # kps-docker-swarm-configs
 
+> **Moving.** Tabz is moving to the Kapeesa server as the `tabz-prod` stack,
+> managed in **`kps-docker-swarm-configs`** (`tabz-docker-compose.prod.yml`,
+> `.env-prod-tabz`, `.env-prod-tabz-notification`; steps in its `TABZ-MOVE.md`).
+> Make env changes there from now on, not here. This repo is kept only to roll back.
+
 Repository for docker swarm configs for the kapeesa backend micro-services
 
 # to access private docker registry images here are the steps
