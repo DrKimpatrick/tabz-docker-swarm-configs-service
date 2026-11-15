@@ -58,6 +58,7 @@ Money goes out from the **primary** jackpot merchant (`SWARMBYTE_CLIENT_ID` / `S
 | Variable | Purpose |
 |----------|---------|
 | `SWARMBYTE_DISBURSEMENT_PIN` | Disbursement PIN set in the Swarmbyte merchant dashboard. **Empty = every payout is refused.** |
+| `PAYOUT_TRACKING_START` | Winners from before this time (default `2026-11-15T00:00:00+03:00`) are not shown as pending and cannot be paid from Bingo; admins can mark them as paid elsewhere. |
 | `PAYOUT_ALERT_NUMBERS` | Comma-separated numbers that get an SMS for every payout result |
 | `PAYOUT_AWARD_MAX_PER_PAYOUT` / `PAYOUT_AWARD_MAX_PER_DAY` | Limits for ad-hoc awards (default 500,000 / 3,000,000 UGX) |
 | `MONGO_AUTO_INDEX` | Must be exactly `true` (no comment on the same line) so the "one payout per winner" unique index exists |
